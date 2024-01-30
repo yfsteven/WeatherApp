@@ -15,42 +15,37 @@ const rcountry = document.getElementById('country');
 const rlat = document.getElementById('lat');
 const rlon = document.getElementById('lon');
 const rlocaltime = document.getElementById('localtime');
+const rtemp_c = document.getElementById('temp_c');
+const rtemp_f = document.getElementById('temp_f');
 
+const div = document.createElement('div');
+div.id = 'condition-image--wrapper';
+const h2 = document.createElement('h2');
+h2.id = 'condition';
+div.append(h2)
+const img = document.createElement('img');
+img.id = 'image';
+div.append(img);
+listWrapper.appendChild(div);
+
+const rcondition = document.getElementById('condition')
+const rimage = document.getElementById('image');
 
 async function getWeather() {
-    const res = await fetch('https://api.weatherapi.com/v1/current.json?key=dd1a4f7d0b3345478bc220543242001&q=Brooklyn', {mode: 'cors'});
+    const res = await fetch('https://api.weatherapi.com/v1/current.json?key=rooklyn', {mode: 'cors'});
     const weatherData = await res.json();
     const data = weatherData.location;
+    const rcurrent = weatherData.current;
+    const routside = rcurrent.condition;
     rname.textContent = data.name;
     rregion.textContent = data.region;
     rcountry.textContent = data.country;
     rlat.textContent = data.lat + ' Latitude';
     rlon.textContent = data.lon + ' Longitude';
+    rcondition.textContent = routside.text;
+    rimage.src = routside.icon;
     console.log(data)
 }
 getWeather();
 console.log(listWrapper.outerHTML);
 
-/*for(let j = 0; j < listItems.length; j++){
-        document.getElementById(listItems[j]).textContent = data;
-        switch(item) {
-            case 'name':
-                item.textContent = data.name;
-                break;
-            case 'region':
-                item.textContent = data.region;
-                break;
-            case 'country':
-                item.textContent = data.country;
-                break;
-            case 'lat':
-                item.textContent = data.lat;
-                break;
-            case 'lon':
-                item.textContent = data.name;
-                break;
-            case 'localtime':
-                item.textContent = data.name;
-                break;
-        }
-    }*/
